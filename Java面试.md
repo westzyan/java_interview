@@ -8999,6 +8999,225 @@ TCP头部20字节，UDP8个
 
 ### HTTP相关
 
+HTTP报文详解
+
+HTTP有两种报文：请求报文和响应报文，具体介绍如下
+
+#### **一、HTTP请求报文**
+
+先上个图，细细分析
+
+[![wKioL1MpX-qwK1-PAAExXPRpR8M814.jpg](Java%E9%9D%A2%E8%AF%95.assets/wKioL1MpX-qwK1-PAAExXPRpR8M814.jpg)](https://s3.51cto.com/wyfs02/M02/22/DA/wKioL1MpX-qwK1-PAAExXPRpR8M814.jpg)
+
+HTTP请求报文主要包括请求行、请求头部以及请求的数据（实体）三部分
+
+**请求行（HTTP请求报文的第一行）**
+
+请求行由方法字段、URL字段和HTTP协议版本字段。其中，方法字段严格区分大小写，当前HTTP协议中的方法都是大写，方法字段如下介绍如下：
+
+**方法字段**
+
+①GET:请求获取Request-URI(URI:通用资源标识符,URL是其子集，URI注重的是标识，而URL强调的是位置，可以将URL看成原始的URI),所标识的资源
+
+②POST：在Request-URI所标识的资源后附加新的数据；支持HTML表单提交，表单中有用户添入的数据，这些数据会发送到服务器端，由服务器存储至某位置（例如发送处理程序）
+
+③HEAD:请求Request-URI所标识的资源响应消息报头，HEAD方法可以在响应时不返回消息体。
+
+④PUT：与GET相反，请求服务器存储一个资源，并用Request-URI做为其标识；例如发布系统。
+
+⑤DELETE：请求删除URL指向的资源
+
+⑥OPTIONS：请求查询服务器的性能，或者查询与资源相关的选项
+
+⑦TRACE：跟踪请求要经过的防火墙、代理或网关等，主要用于测试或诊断
+
+⑧CONNECT保留将来使用
+
+- **URL**
+
+一个完整的包括类型、主机名和可选路径名的统一资源引用名，如：http://www.example.com/path/to/file.html
+
+**请求头部：位于请求行的下面**
+
+请求报文中常见的标头有：
+
+Connetion标头（连接管理）、Host标头（指定请求资源的主机）、Range标头（请求实体的字节范围）、User-Agent标头（包含发出请求的用户信息）、Accept标头（首选的媒体类型）、Accept-Language(首选的自然语言)
+
+**HTTP首部：**
+
+**通用首部：请求和响应都可以使用的；**
+
+Connection：定义C/S之间关于请求/响应的有关选项
+
+对于http/1.0, Connection: keep-alive
+
+Via: 显示了报文经过的中间节点
+
+Cache-Control: 缓存指示
+
+**实体首部：用于指定实体属性**
+
+实体主体用于POST方法中。用户向Web服务器提交表单数据的时候，需要使用POST方法，此时主体中包含用户添写在表单的各个属性字段的值，当Web服务器收到POST方法的HTTP请求报文后，可以从实体中取出需要的属性字段的值。
+
+也就是说，当用户通过Web浏览器向Web服务器发送请求时,Web浏览器会根据用户的具体请求来选择不同的HTTP请求方法，再将相应的URL和HTTP协议版本及相关的标头填入头部行中，若是POST方法，还会将相关的表单数据填入实体主体中，产生一个HTTP请求报文，然后将这个报文发送给Web服务器。
+
+ 
+
+Location: 资源的新位置
+
+Allow: 允许对此资源使用的请求方法
+
+1、内容首部：
+
+Content-Encoding：支持的编码
+
+Content-Language：支持的自然语言
+
+Content-Length：文本长度
+
+Content-Location：资源所在位置
+
+Content-Range：在整个资源中此实体表示的字节范围
+
+Content-Type：主体的对象类型
+
+2、缓存首部：
+
+ETag: 实体标签
+
+Expires: 过期期限
+
+Last-Modified: 上一次的修改时间
+
+#### **请求首部：**
+
+Host: 请求的主机名和端口号，虚拟主机环境下用于不同的虚拟主机
+
+Referer：指明了请求当前资源的原始资源的URL
+
+User-Agent: 用户代理，使用什么工具发出的请求
+
+1、Accept首部：用户标明客户自己更倾向于支持的能力
+
+Accept: 指明服务器能发送的媒体类型
+
+Accept-Charset: 支持使用的字符集
+
+Accept-Encoding: 支持使用的编码方式
+
+Accept-Language: 支持使用语言
+
+2、条件请求首部：
+
+Expect: 告诉服务器能够发送来哪些媒体类型
+
+If-Modified-Since: 是否在指定时间以来修改过此资源
+
+If-None-Match:如果提供的实体标记与当前文档的实体标记不符，就获取此文档
+
+跟安全相关的请求首部：
+
+Authorization: 客户端提交给服务端的认证数据，如帐号和密码
+
+Cookie: 客户端发送给服务器端身份标识
+
+[![wKiom1MphduAsu6XAAM_loPLbc0713.jpg](Java%E9%9D%A2%E8%AF%95.assets/wKiom1MphduAsu6XAAM_loPLbc0713.jpg)](https://s3.51cto.com/wyfs02/M02/22/DA/wKiom1MphduAsu6XAAM_loPLbc0713.jpg)
+
+上图展示一般请求所带有的属性
+
+=====================================================================================
+
+#### **二、响应报文**
+
+上图分析
+
+[![wKiom1MpmHWALc2UAADu14JLceA655.jpg](Java%E9%9D%A2%E8%AF%95.assets/wKiom1MpmHWALc2UAADu14JLceA655.jpg)](https://s3.51cto.com/wyfs02/M02/22/DB/wKiom1MpmHWALc2UAADu14JLceA655.jpg)
+
+HTTP响应报文同样也分为三部分，有状态行、首部行、实体
+
+状态行:HTTP响应报文的第一行
+
+状态行包括三个字段：协议版本、状态码与原因短语。
+
+#### **状态码：**
+
+**1xx：**
+
+这一类型的状态码，代表请求已被接受，需要继续处理。这类响应是临时响应，只包含状态行和某些可选的响应头信息，并以空行结束。
+
+**2xx:**
+
+这一类型的状态码，代表请求已成功被服务器接收、理解、并接受。
+
+**3xx:**
+
+这类状态码代表需要客户端采取进一步的操作才能完成请求。通常，这些状态码用来重定向，后续的请求地址（重定向目标）在本次响应的Location域中指明。
+
+**4xx:**
+
+这类的状态码代表客户端类的错误
+
+**5xx:**
+
+服务器类的错误
+
+常遇到的状态码说明
+
+ 
+
+| 状态码 | 状态描述                   | 简要说明                                                     |
+| ------ | -------------------------- | ------------------------------------------------------------ |
+| 200    | OK                         | 客户端请求成功                                               |
+| 201    | Created                    | 请求已经被实现，而且有一个新的资源已经依据请求的需要而创建，且其URI已经随Location头信息返回。 |
+| 301    | Moved Permanently          | 被请求的资源已永久移动到新位置，并且将来任何对此资源的引用都应该使用本响应返回的若干个URI之一 |
+| 302    | Found                      | 在响应报文中使用首部“Location: URL”指定临时资源位置          |
+| 304    | Not Modified               | 条件式请求中使用                                             |
+| 403    | Forbidden                  | 请求被服务器拒绝                                             |
+| 404    | Not Found                  | 服务器无法找到请求的URL                                      |
+| 405    | Method Not Allowed         | 不允许使用此方法请求相应的URL                                |
+| 500    | Internal Server Error      | 服务器内部错误                                               |
+| 502    | Bad Gateway                | 代理服务器从上游收到了一条伪响应                             |
+| 503    | Service Unavailable        | 服务器此时无法提供服务，但将来可能可用                       |
+| 505    | HTTP Version Not Supported | 服务器不支持，或者拒绝支持在请求中使用的HTTP版本。这暗示着服务器不能或不愿使用与客户端相同的版本。响应中应当包含一个描述了为何版本不被支持以及服务器支持哪些协议的实体。 |
+
+#### **响应首部（首部行）**：
+
+位于响应报文状态行之后
+
+Date标头：消息产生的时间
+
+Age标头:（从最初创建开始）响应持续时间
+
+Server标头: 向客户端标明服务器程序名称和版本
+
+ETage标头：不透明验证者
+
+Location标头：URL备用的位置
+
+Content-Length标头：实体的长度
+
+Content-Type标头：实体的媒体类型
+
+协商首部：
+
+Accept-Ranges: 对当前资源来讲，服务器所能够接受的范围类型
+
+Vary: 首部列表，服务器会根据列表中的内容挑选出最适合的版本发送给客户端
+
+跟安全相关的响应首部：
+
+Set-Cookie: 服务器端在某客户端第一次请求时发给令牌
+
+WWW-Authentication: 质询，即要求客户提供帐号和密码
+
+响应首部一般包含如下内容：
+
+[![wKiom1MprnXiYF18AALhmNtc3OE334.jpg](Java%E9%9D%A2%E8%AF%95.assets/wKiom1MprnXiYF18AALhmNtc3OE334.jpg)](https://s3.51cto.com/wyfs02/M02/22/DB/wKiom1MprnXiYF18AALhmNtc3OE334.jpg)
+
+**实体**：位于首部行之后
+
+实体包含了Web客户端请求的对象。Content-Length标头及Content-Type标头用于计算实体的位置、数据类型和数据长度。当Web服务器接收到Web客户端的请求报文后，对HTTP请求报文进行解析，并将Web客户端的请求的对象取出打包，通过HTTP响应报文将数据传回给Web客户端，如果出现错误则返回包含对应错误的错误代码和错误原因的HTTP响应报文。
+
 ![image-20200312233617475](Java面试.assets/image-20200312233617475.png)
 
 ![image-20200312233804799](Java面试.assets/image-20200312233804799.png)
@@ -9441,6 +9660,67 @@ PS：我在知乎上看到有人是这样说的,我感觉说的也挺有道理�
 查找数据，最简单的方式是顺序查找。但是对于几十万上百万，甚至上亿的数据库查询就很慢了。
 
 所以要对查找的方式进行优化，熟悉的二分查找，二叉树可以把速度提升到O(log(n,2))，查询的瓶颈在于树的深度，最坏的情况要查找到二叉树的最深层，由于，每查找深一层，就要访问更深一层的索引文件。在多达数G的索引文件中，这将是很大的开销。所以，尽量把数据结构设计的更为‘矮胖’一点就可以减少访问的层数。在众多的解决方案中，B-/B+树很好的适合。B-树定义具体可以查阅，简而言之就是中间节点可以多余两个子节点，而且中间的元素可以是一个域。相比B-树，B+树的父节点也必须存在于子节点中，是其中最大或者最小元素，B+树的节点只存储索引key值，具体信息的地址存在于叶子节点的地址中。这就使以页为单位的索引中可以存放更多的节点。减少更多的I/O支出。因此，B+树成为了数据库比较优秀的数据结构，MySQL中MyIsAM和InnoDB都是采用的B+树结构。不同的是前者是非聚集索引，后者主键是聚集索引，所谓聚集索引是物理地址连续存放的索引，在取区间的时候，查找速度非常快，但同样的，插入的速度也会受到影响而降低。聚集索引的物理位置使用链表来进行存储。
+
+### 索引失效
+
+#### 创建索引的原则
+
+- 最左前缀匹配原则
+- 频繁作为查询条件的字段才去创建索引
+- 频繁更新的字段不适合创建索引
+- 索引列不能参与计算，不能有函数操作
+- 优先考虑扩展索引，而不是新建索引，避免不必要的索引
+- 在order by或者group by子句中，创建索引需要注意顺序
+- 区分度低的数据列不适合做索引列(如性别）
+- 定义有外键的数据列一定要建立索引
+- 对于定义为text、image数据类型的列不要建立索引
+- 删除不再使用或者很少使用的索引
+
+#### 索引失效的情况
+
+- 查询条件包含or，**可能**导致索引失效
+
+  where子句中包含or，并且or条件连接的字段中不是都有索引，则索引失效；
+
+  如果我们想用or又想让它命中索引，那么只能将or条件中的每一列都加上索引！！！
+
+- like通配符**可能**导致索引失效。（解决方法：使用覆盖索引）
+
+  如果用like查询的话，%在最左边则索引失效，%在右边会命中索引；
+
+  但是当我们使用索引列进行查询的时候，就都会命中索引！！！
+
+- 如果字段类型是字符串，where时一定用引号括起来，否则索引失效
+
+- 联合索引，查询时的条件列不是联合索引中的第一个列，索引失效。
+
+- 在索引列上使用MySQL的内置函数，索引失效。
+
+- 对索引列运算（如，+、-、*、/），索引失效。
+
+- 索引字段上使用（!= 或者 < >，not in）时，**可能**会导致索引失效。
+
+- 索引字段上使用is null， is not null，**可能**导致索引失效。
+
+- 左连接查询或者右连接查询查询关联的字段编码格式不一样，可能导致索引失效。
+
+- MySQL估计使用全表扫描要比使用索引快,则不使用索引。
+
+补充知识：
+
+【覆盖索引】：一个索引中包含所有需要查询字段的值。优点：无需回表，只需要在一棵索引树上就能获取SQL所需的所有列数据，无需回表，速度更快。
+
+【回表】：二级索引无法直接查询所有列的数据，所以通过二级索引查询到聚集索引后，再通过聚集索引查询到想要的数据，这种通过二级索引查询出来的过程，就叫做回表。就是先通过数据库索引扫描出数据所在的行，再通过行主键id取出索引中未提供的数据，即基于非主键索引的查询需要多扫描一棵索引树。
+
+常见的方法是：将被查询的字段，建立到联合索引里去。
+
+普通索引的查询过程，通常情况下，需要扫码两遍索引树。
+
+例如：
+
+```mysql
+select * from t where name = 'lisi';　
+```
 
 
 
@@ -10934,6 +11214,82 @@ commit;
 ### 1、设计模式
 
 1、单例模式
+
+```
+@ThreadSafe
+@Recommend
+public class SingletonExample7 {
+
+
+    //私有构造函数
+    private SingletonExample7(){
+
+    }
+    //静态的工厂方法
+    public static SingletonExample7 getInstance(){
+        return Singleton.INSTANCE.getInstance();
+    }
+
+    private enum Singleton{
+        INSTANCE;
+
+        private SingletonExample7 singleton;
+
+        //JVM 保证这个方法绝对只是调用一次
+        Singleton(){
+            singleton = new SingletonExample7();
+        }
+
+        public SingletonExample7 getInstance(){
+            return singleton;
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println(getInstance().hashCode());
+        System.out.println(getInstance().hashCode());
+    }
+}
+
+```
+
+```
+@ThreadSafe
+public class SingletonExample5 {
+
+
+    //私有构造函数
+    private SingletonExample5(){
+
+    }
+
+    // 1。memory = allocate() 分配对象的内存空间
+    // 2。ctornstance（）初始化对象
+    // 3。instance = memory 设置instance 指向刚才分配的内存
+
+
+    //volatile 限制指令重排
+
+    //单例对象 volatile + 双重检测机制， 禁止指令重排
+    private volatile static SingletonExample5 instance = null;
+
+
+    //静态的工厂方法
+    public static SingletonExample5 getInstance(){
+        if (instance == null){  //双重检测机制    //B
+            synchronized (SingletonExample5.class){  //同步锁
+                if (instance == null){
+                    instance = new SingletonExample5();  //A
+                }
+            }
+        }
+        return instance;
+    }
+}
+
+```
+
+
 
 2、工厂模式
 
