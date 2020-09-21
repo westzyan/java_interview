@@ -5301,6 +5301,26 @@ AIO
 
 ![image-20200228225236354](Java面试.assets/image-20200228225236354.png)
 
+![image-20200917101235420](Java%E9%9D%A2%E8%AF%95.assets/image-20200917101235420.png)
+
+![image-20200917101825914](Java%E9%9D%A2%E8%AF%95.assets/image-20200917101825914.png)
+
+
+
+![image-20200917101938773](Java%E9%9D%A2%E8%AF%95.assets/image-20200917101938773.png)
+
+![image-20200917102605092](Java%E9%9D%A2%E8%AF%95.assets/image-20200917102605092.png)
+
+![image-20200917104128256](Java%E9%9D%A2%E8%AF%95.assets/image-20200917104128256.png)
+
+![image-20200917104812754](Java%E9%9D%A2%E8%AF%95.assets/image-20200917104812754.png)
+
+1.通过动态代理生成对象，在beanFactoryPostProcesser中通过beanFactory对象的registerSingletonObject方法注册到单例池中，交给Spring管理
+
+2.利用factoryBean，覆写getObject方法，以及getObjectType方法，在getObject中通过new或者动态代理方法，返回一个对象，通过Applicationcontext的getBean方法，获取到对象，并且默认是单例的
+
+
+
 ![image-20200228231938744](Java面试.assets/image-20200228231938744.png)
 
 ![image-20200228232210152](Java面试.assets/image-20200228232210152.png)
@@ -11432,6 +11452,12 @@ Handler:定义处理请求的接口,并且实现后继链(successor)
 
 #### 9、代理模式
 
+按照代理类的创建时期，代理类可分为两种。
+
+| 静态代理 | 由程序员创建或由特定工具自动生成源代码，再对其编译。                         在程序运行前，代理类的.class文件就已经存在了                                   静态代理通常只代理一个类静态代理事先知道要代理的是什么 |
+| :------- | ------------------------------------------------------------ |
+| 动态代理 | 在程序运行时，运用反射机制动态创建而成                                                      动态代理是代理一个接口下的多个实现类                                                 动态代理不知道要代理什么东西，只有在运行时才知道 |
+
 **1). 代理**
 
 　　代理模式其实很常见，比如买火车票这件小事：黄牛相当于是我们本人的的代理，我们可以通过黄牛买票。通过黄牛买票，我们可以避免与火车站的直接交互，可以省很多事，并且还能享受到黄牛更好的服务(如果钱给够的话)。在软件开发中，代理也具有类似的作用，并且一般可以分为静态代理和动态代理两种，上述的这个黄牛买票的例子就是静态代理。
@@ -11484,7 +11510,7 @@ package com.frank.test;
 
 public interface Movie {
     void play();
-}12345
+}
 ```
 
 ------
@@ -11501,7 +11527,7 @@ public class RealMovie implements Movie {
         // TODO Auto-generated method stub
         System.out.println("您正在观看电影 《肖申克的救赎》");
     }
-}12345678
+}
 ```
 
 　　这个表示真正的影片。它实现了 Movie 接口，play()方法调用时，影片就开始播放。那么代理类呢？
@@ -11531,7 +11557,7 @@ public class Cinema implements Movie {
             System.out.println("电影马上结束了，爆米花、可乐、口香糖9.8折，买回家吃吧！");
         }
     }
-}12345678910111213141516171819202122232425
+}
 ```
 
 　　Cinema 就是代理对象，它有一个 play() 方法。不过调用 play() 方法时，它进行了一些相关利益的处理，那就是广告。也就是说，Cinema(代理类) 与 RealMovie(目标类) 都可以播放电影，但是除此之外，Cinema(代理类)还对“播放电影”这个行为进行进一步增强，即增加了额外的处理，同时不影响RealMovie(目标类)的实现。
@@ -11636,7 +11662,7 @@ public class ProxyHandler implements InvocationHandler {
 
         return obj;
     }
-}1234567891011121314151617181920212223242526272829303132333435
+}
 ```
 
 ------
@@ -11673,7 +11699,7 @@ public class Test {
         后置增强处理：hahaha...
         代理对象的类型 ： com.sun.proxy.$Proxy0
         代理对象所在类的父类型 ： class java.lang.reflect.Proxy
- **/123456789101112131415161718192021222324252627282930
+ **/
 ```
 
 　　到此为止，我们给出了完整的基于JDK动态代理机制的代理模式的实现。我们从上面的实例中可以看到，代理对象proxySubject的类型为”com.sun.proxy.$Proxy0”，这恰好印证了proxySubject对象是一个代理对象。除此之外，**我们还发现代理对象proxySubject所对应的类继承自java.lang.reflect.Proxy类，这也正是JDK动态代理机制无法实现对class的动态代理的原因：Java只允许单继承。**
